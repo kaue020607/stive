@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de media semestral</title>
+    <style>
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            background-color: #eef2f7;
+            font-family: Arial, sans-serif;
+            color: #1a1a1a;
+        }
+        h1 {
+            margin: 24px 0 12px;
+            font-size: 2rem;
+            text-align: center;
+        }
+        form {
+            width: 100%;
+            max-width: 520px;
+            padding: 24px;
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: 600;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 12px 14px;
+            margin-top: 6px;
+            border: 1px solid #cccccc;
+            border-radius: 10px;
+            background-color: #fff7a8;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            margin-top: 24px;
+            padding: 14px 18px;
+            border: none;
+            border-radius: 12px;
+            background-color: #2c6fb6;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #245a93;
+        }
+        .resultado {
+            width: 100%;
+            max-width: 520px;
+            margin-top: 16px;
+            padding: 18px 20px;
+            background: #f3f8ff;
+            border: 1px solid #c9ddf7;
+            border-radius: 14px;
+            min-height: 54px;
+            box-sizing: border-box;
+            font-size: 1rem;
+        }
+        .rodape {
+            width: 100%;
+            max-width: 520px;
+            margin-top: auto;
+            padding: 18px 0 24px;
+            text-align: right;
+            color: #555;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simulador de media semestral</h1>
+    <form id="mediaForm" onsubmit="return false;">
+        <label for="atividaden1">Atividade N1</label>
+        <input type="number" id="atividaden1" step="0.01" min="0" max="10" placeholder="0.00" required>
+
+        <label for="provan1">Prova N1</label>
+        <input type="number" id="provan1" step="0.01" min="0" max="10" placeholder="0.00" required>
+
+        <label for="provan2">Prova N2</label>
+        <input type="number" id="provan2" step="0.01" min="0" max="10" placeholder="0.00" required>
+
+        <label for="atividaden3">Atividade N3</label>
+        <input type="number" id="atividaden3" step="0.01" min="0" max="10" placeholder="0.00" required>
+
+        <label for="provan3">Prova N3</label>
+        <input type="number" id="provan3" step="0.01" min="0" max="10" placeholder="0.00" required>
+
+        <button type="button" onclick="calcularMedia()">Calcular</button>
+    </form>
+
+    <div class="resultado" id="resultado"></div>
+
+    <div class="rodape"> desenvolvedor: Kaue Ruan Dias de Oliveira</div>
+
+    <script>
+        function calcularMedia() {
+            const atividaden1 = parseFloat(document.getElementById('atividaden1').value);
+            const provan1 = parseFloat(document.getElementById('provan1').value);
+            const provan2 = parseFloat(document.getElementById('provan2').value);
+            const atividaden3 = parseFloat(document.getElementById('atividaden3').value);
+            const provan3 = parseFloat(document.getElementById('provan3').value);
+
+            if ([atividaden1, provan1, provan2, atividaden3, provan3].some(valor => isNaN(valor))) {
+                document.getElementById('resultado').textContent = 'Por favor, preencha todas as notas corretamente.';
+                return;
+            }
+
+            const notan1 = (atividaden1 + provan1) / 2;
+            const notan2 = provan2;
+            const notan3 = (atividaden3 + provan3) / 2;
+            const media = (notan1 + notan2 + notan3) / 3;
+            const situacao = media >= 7 ? 'Aprovado' : media >= 5 ? 'Recuperação' : 'Reprovado';
+
+            document.getElementById('resultado').textContent = `Média semestral: ${media.toFixed(2)} — Situação: ${situacao}`;
+        }
+    </script>
+</body>
+</html>
